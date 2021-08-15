@@ -1,0 +1,13 @@
+def compute_hedge(stock, option):
+    NS = np.zeros([2 * T + 1, T]) # build an empty matrix of the right size
+    for t in range(0, T):
+        for a in range(0, t + 1): # a is the number of times that the trend is u 
+            for b in range(0, t + 1 - a): # b is the number of times that the trend is d 
+                i = T - a + b # i is the row coordinate
+
+            NS[i, t] = 1/3 * (
+                (option[i - 1, t + 1] - option[i + 1, t + 1]) / (stock[i - 1, t + 1] - stock[i + 1, t + 1]) +
+                (option[i, t + 1] - option[i + 1, t + 1]) / (stock[i, t + 1] - stock[i + 1, t + 1]) +
+                (option[i - 1, t + 1] - option[i, t + 1]) / (stock[i - 1, t + 1] - stock[i, t + 1]))
+    
+    return [NS]
